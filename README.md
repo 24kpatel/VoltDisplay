@@ -1,47 +1,42 @@
-# Volt Display
+# VoltDisplay
 
-Volt Display is a Kotlin Android kiosk browser for Volt Raceway display devices.
+VoltDisplay is a lightweight, full-screen Android display app built for the U8 Android 14 device. It opens a configurable website in Android System WebView and automatically retries when the network or page is temporarily unavailable.
 
-## Current milestone
+## First launch
 
-- Android SDK 35
-- Kotlin and Material 3
-- Landscape-only full-screen WebView
-- Keeps the screen awake
-- Loads `http://192.168.152.236:5050/`
-- Hides status and navigation bars
-- Shows a recoverable connection-error screen
-- Retries automatically every 10 seconds
-- Launches after Android boot where the device permits background launches
-- GitHub Actions builds debug and release APK artifacts
-- Optional release signing through repository secrets
+1. Install and open the APK.
+2. Enter the website that the screen should display.
+3. Select **Save and Open**.
 
-## Build requirements
+To reopen settings, press the remote **Menu** button or press **Back twice**. The screen remains awake and the navigation bars are hidden while the app is active.
 
-- JDK 17
-- Gradle 8.9
-- Android SDK 35
+## Design choices
 
-Open the project in Android Studio or run:
+- Pure Java with no Kotlin runtime, avoiding the duplicate Kotlin standard-library conflict from the earlier APK.
+- Supports Android 6.0 and newer; compiled for Android API 35.
+- JavaScript, DOM storage, cookies, media playback, and responsive desktop-style pages are supported.
+- HTTP can be used for a trusted local display server; HTTPS should be used for internet pages.
+- SSL certificate errors are not bypassed.
+- A failed page retries automatically after 15 seconds.
+- A crashed WebView renderer restarts the activity instead of closing the app.
+
+## Build in GitHub
+
+The workflow at `.github/workflows/build-android.yml` runs the unit tests and creates a debug APK after a push to `main`.
+
+1. Open the repository's **Actions** tab.
+2. Select **Build Android APK**.
+3. Select **Run workflow**.
+4. When it finishes, download the `VoltDisplay-debug-apk` artifact.
+
+## Build in Android Studio
+
+Open this folder as a project in Android Studio, allow Gradle to sync, and select **Build > Build APK(s)**.
+
+## Install with ADB
 
 ```bash
-gradle :app:assembleDebug
-gradle :app:assembleRelease
+adb install -r app-debug.apk
 ```
 
-## Release signing secrets
-
-- `KEYSTORE_BASE64`
-- `KEYSTORE_PASSWORD`
-- `KEY_ALIAS`
-- `KEY_PASSWORD`
-
-Never commit a keystore or passwords to this public repository.
-
-## Next milestone
-
-- PIN-protected settings
-- Saved URL and restore-default controls
-- Test URL
-- Auto-refresh setting
-- Device and network information
+If Android blocks installation, enable installation from the file manager or ADB source being used on the device.

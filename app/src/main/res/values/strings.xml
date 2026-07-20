@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Volt Display</string>
+    <string name="settings_title">Volt Display Setup</string>
+    <string name="settings_instructions">Enter the website this screen should display. Press the remote Menu button, or press Back twice, to reopen these settings.</string>
+    <string name="url_hint">https://example.com/display</string>
+    <string name="save_and_open">Save and Open</string>
+    <string name="exit_app">Exit</string>
+    <string name="retry_message">Unable to load the display. Checking the connection and trying again…</string>
+    <string name="back_again_for_settings">Press Back again to open settings</string>
+    <string name="no_app_for_link">No installed app can open this link.</string>
+</resources>
